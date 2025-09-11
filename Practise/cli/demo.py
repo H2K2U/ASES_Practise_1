@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from Practise import LoadType, TotalLoad, YearHourlyDemand
+from Practise import LoadType, TotalLoad, HourlyDemand, DemandVisualizer
 
 
 def main():
@@ -36,42 +36,19 @@ def main():
         "Декабрь": 1.0
     }
 
-    yhd = YearHourlyDemand(daily_load_schedule, season_factors)
-    annual_load = yhd.year_hourly_demand(consumers.total_active_lp())
+    hourlydemand = HourlyDemand(consumers.total_active_lp(), daily_load_schedule, season_factors)
 
-    # ---------- Визуализация ----------
-    idx = pd.date_range(start="2024-01-01", periods=len(annual_load), freq="H")
-    s = pd.Series(annual_load, index=idx)
+    yearly_demand = hourlydemand()
+    monthly_demand = hourlydemand("Январь")
+    daily_demand = hourlydemand("Январь", 10)
 
-    # агрегируем по месяцам
-    monthly_mean = s.resample("M").mean()
-    monthly_max = s.resample("M").max()
-    monthly_min = s.resample("M").min()
+    # hd = HourlyDemand(total_active_lp, daily_load_schedule, season_factors)
+    viz = DemandVisualizer(hourlydemand)
 
-    # подписи месяцев
-    months = monthly_mean.index.strftime("%b")
+    viz.plot_year()              # месяцы по X, часовой ряд за год по Y
+    viz.plot_month("Апрель")     # дни по X, часовой ряд месяца по Y
+    viz.plot_day("Апрель", 10)   # часы 1..24 по X, суточный профиль по Y
 
-    plt.figure(figsize=(10, 5))
-
-    # заливка между минимумом и максимумом
-    plt.fill_between(months, monthly_min.values, monthly_max.values,
-                     color="lightblue", alpha=0.3, label="Диапазон (мин–макс)")
-
-    # линия средней нагрузки
-    plt.plot(months, monthly_mean.values, marker="o", linewidth=2,
-             color="tab:blue", label="Средняя нагрузка")
-
-    # линии min и max (для наглядности)
-    plt.plot(months, monthly_max.values, linestyle="--", color="tab:red", label="Максимум")
-    plt.plot(months, monthly_min.values, linestyle="--", color="tab:green", label="Минимум")
-
-    plt.title("Месячные нагрузки за год", fontsize=14)
-    plt.xlabel("Месяц")
-    plt.ylabel("Мощность, кВт")
-    plt.grid(True, alpha=0.3)
-    plt.legend()
-    plt.tight_layout()
-    plt.show()
 
 if __name__ == '__main__':
     main()
