@@ -46,8 +46,8 @@ def main():
     viz = DemandVisualizer(hourlydemand)
 
     viz.plot_year()              # месяцы по X, часовой ряд за год по Y
-    viz.plot_month("Апрель")     # дни по X, часовой ряд месяца по Y
-    viz.plot_day("Апрель", 10)   # часы 1..24 по X, суточный профиль по Y
+    viz.plot_month("Январь")     # дни по X, часовой ряд месяца по Y
+    viz.plot_day("Январь", 1)   # часы 1..24 по X, суточный профиль по Y
 
 
 if __name__ == '__main__':
