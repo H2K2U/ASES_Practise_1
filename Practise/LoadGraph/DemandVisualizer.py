@@ -135,7 +135,7 @@ class DemandVisualizer:
                       "Часы", "Мощность")
 
         # ▸ небольшой запас по Y
-        ax.set_ylim(top=max(y_day) * 1.1)
+        ax.set_ylim(top=max(y_day) * 1.2)
 
         if show:
             plt.tight_layout()
