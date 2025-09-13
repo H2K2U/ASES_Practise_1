@@ -48,12 +48,12 @@ class DieselGenerator:
             rows.append({
                 "№": i,
                 "Наименование": u.name,
-                "Pн, кВт": u.rated_active_power,
-                "Sн, кВА": u.rated_apparent_power,
+                "Pном, кВт": u.rated_active_power,
+                "Sном, кВА": u.rated_apparent_power,
                 "Pпик, кВт": u.peak_active_power,
-                "q, л/кВт·ч": u.spec_fuel_cons,
-                "Коэф. Fc": u.coeff_fc,
-                "P min, кВт": u.min_active_power,
+                "Кол-во фаз, шт": u.number_of_phases,
+                "U, кВ": u.rated_voltage,
+                "q, л/кВт·ч": u.spec_fuel_cons
             })
 
         df = pd.DataFrame(rows)

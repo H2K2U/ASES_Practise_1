@@ -7,6 +7,8 @@ class DieselPowerUnit:
     rated_active_power: float
     rated_apparent_power: float
     peak_active_power: float
+    number_of_phases: int
+    rated_voltage: float
     spec_fuel_cons: float
     coeff_fc: float = field(default=0.3)
     active_power: float = field(default=0)
@@ -20,10 +22,3 @@ class DieselPowerUnit:
                                 (1 - self.coeff_fc) * self.spec_fuel_cons * \
                                 (self.active_power / self.rated_active_power)
         return actual_spec_fuel_cons
-
-    # def __repr__(self):
-    #     return (f"Марка генератора: {self.name}\n"
-    #             f"Pном, кВ: {self.rated_active_power}\n"
-    #             f"Sном, кВА: {self.rated_apparent_power}\n"
-    #             f"Pпик, кВ: {self.peak_active_power}\n"
-    #             f"q, л/кВт*ч: {self.spec_fuel_cons}\n")

@@ -1,6 +1,6 @@
 import pandas as pd
 
-from Practise import LoadType, TotalLoad, HourlyDemand, DemandVisualizer, DieselPowerUnit, DieselGenerator
+from Practise import LoadType, TotalLoad, HourlyDemand, DemandVisualizer, DieselPowerUnit, DieselGenerator, HydroPowerPlant
 
 
 def build_consumers():
@@ -19,20 +19,9 @@ def build_consumers():
 
 def load_graph_params():
     daily_load_schedule = [15, 15, 25, 70, 60, 70, 80, 55, 70, 100, 65, 30]
-    season_factors = {
-        "Январь": 1.0,
-        "Февраль": 1.0,
-        "Март": 0.9,
-        "Апрель": 0.8,
-        "Май": 0.8,
-        "Июнь": 0.7,
-        "Июль": 0.7,
-        "Август": 0.7,
-        "Сентябрь": 0.8,
-        "Октябрь": 0.9,
-        "Ноябрь": 0.9,
-        "Декабрь": 1.0
-    }
+    season_factors = {"Январь": 1.0, "Февраль": 1.0, "Март": 0.9, "Апрель": 0.8,
+                      "Май": 0.8, "Июнь": 0.7, "Июль": 0.7, "Август": 0.7,
+                      "Сентябрь": 0.8, "Октябрь": 0.9, "Ноябрь": 0.9, "Декабрь": 1.0}
 
     return daily_load_schedule, season_factors
 
@@ -64,6 +53,8 @@ def dpu_base():
                               rated_active_power=row["Pном (кВт)"],
                               rated_apparent_power=row["Sном (кВА)"],
                               peak_active_power=row["Pпик (кВт)"],
+                              number_of_phases=row["К-во фаз"],
+                              rated_voltage=row["U (кВ)"],
                               spec_fuel_cons=row["q (л/кВт*ч)"]
                               )
         dpu_base.append(dpu)
@@ -77,10 +68,12 @@ def assembly_dg(name, assembly_type):
 
 def main():
     #demand_visualizer("daily")
-    dg = assembly_dg("Ядерная", "3x30+10")
+    dg = assembly_dg("Ядерная", "2x50")
     print(build_consumers().total_apparent_lp())
     dg.show_table()
     print(dg.rated_apparent_power)
+
+    hpp = HydroPowerPlant("Базовая", 80)
 
 
 if __name__ == '__main__':
