@@ -5,6 +5,8 @@ from Practise.LoadGraph.DemandVisualizer import DemandVisualizer
 from Practise.Generators.Diesel.DieselPowerUnit import DieselPowerUnit
 from Practise.Generators.Diesel.DieselGenerator import DieselGenerator
 from Practise.Generators.Hydro.HydroPowerPlant import HydroPowerPlant
+from Practise.Storage.BESbank import BESbank
 
-
-__all__ = ['LoadType', 'TotalLoad', 'HourlyDemand', 'DemandVisualizer', 'DieselPowerUnit', 'DieselGenerator', 'HydroPowerPlant']
+__all__ = ['LoadType', 'TotalLoad', 'HourlyDemand',
+           'DemandVisualizer', 'DieselPowerUnit', 'DieselGenerator',
+           'HydroPowerPlant', 'BESbank']

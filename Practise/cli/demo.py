@@ -1,6 +1,8 @@
 import pandas as pd
 
-from Practise import LoadType, TotalLoad, HourlyDemand, DemandVisualizer, DieselPowerUnit, DieselGenerator, HydroPowerPlant
+from Practise import (LoadType, TotalLoad, HourlyDemand,
+                      DemandVisualizer, DieselPowerUnit,
+                      DieselGenerator, HydroPowerPlant, BESbank)
 
 
 def build_consumers():
@@ -16,6 +18,12 @@ def build_consumers():
         consumers.append_load(cons)
 
     return consumers
+
+def build_hpp():
+    return HydroPowerPlant("Базированная", 80)
+
+def guaranteed_power_deficit():
+    return build_consumers().total_apparent_lp() - build_hpp().rated_apparent_power
 
 def load_graph_params():
     daily_load_schedule = [15, 15, 25, 70, 60, 70, 80, 55, 70, 100, 65, 30]
@@ -63,17 +71,20 @@ def dpu_base():
 
 def assembly_dg(name, assembly_type):
     dg = DieselGenerator(name, assembly_type)
-    dg.auto_assembly_dg(dpu_base(), build_consumers().total_active_lp())
+    dg.auto_assembly_dg(dpu_base(), guaranteed_power_deficit())
     return dg
 
 def main():
     #demand_visualizer("daily")
-    dg = assembly_dg("Ядерная", "2x50")
-    print(build_consumers().total_apparent_lp())
-    dg.show_table()
-    print(dg.rated_apparent_power)
+    # dg = assembly_dg("Ядерная", "2x50")
+    # print(build_consumers().total_apparent_lp())
+    # dg.show_table()
+    # print(dg.rated_apparent_power)
 
-    hpp = HydroPowerPlant("Базовая", 80)
+    hourly_demand = HourlyDemand(build_consumers().total_active_lp(), *load_graph_params())
+    bes_bank = BESbank()
+    chen = bes_bank.charge_energy(hourly_demand, build_hpp())
+    print(chen)
 
 
 if __name__ == '__main__':
