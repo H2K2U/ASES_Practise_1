@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import math
 
 
@@ -7,6 +7,7 @@ class LoadType:
     lp_type: str
     __load_power: float
     cosf: float
+    rated_voltage: float = field(default=0.4)
 
     @property
     def load_power(self): return self.__load_power

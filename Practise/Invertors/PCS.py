@@ -11,3 +11,6 @@ class PCS:
     output_voltage: float
     max_capacity: float
     price: float
+    efficiency: float = field(default=0.95)
+
+

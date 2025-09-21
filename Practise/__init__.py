@@ -6,7 +6,9 @@ from Practise.Generators.Diesel.DieselPowerUnit import DieselPowerUnit
 from Practise.Generators.Diesel.DieselGenerator import DieselGenerator
 from Practise.Generators.Hydro.HydroPowerPlant import HydroPowerPlant
 from Practise.Storage.BESbank import BESbank
+from Practise.Storage.BES import BES
+from Practise.Invertors.PCS import PCS
 
 __all__ = ['LoadType', 'TotalLoad', 'HourlyDemand',
            'DemandVisualizer', 'DieselPowerUnit', 'DieselGenerator',
-           'HydroPowerPlant', 'BESbank']
+           'HydroPowerPlant', 'BESbank', 'BES', 'PCS']
